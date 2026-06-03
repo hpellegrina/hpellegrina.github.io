@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Heitor Pellegrina</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: 16px;
+      line-height: 1.65;
+      color: #222;
+      background: #fff;
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 48px 24px 80px;
+    }
+
+    /* ── Header ── */
+    #header {
+      display: flex;
+      gap: 36px;
+      align-items: flex-start;
+      margin-bottom: 44px;
+    }
+    #header img {
+      width: 148px;
+      height: 148px;
+      object-fit: cover;
+      border-radius: 4px;
+      flex-shrink: 0;
+    }
+    #header-text h1 {
+      font-size: 1.7rem;
+      font-weight: normal;
+      letter-spacing: 0.01em;
+      margin-bottom: 4px;
+    }
+    #header-text .title {
+      font-size: 0.92rem;
+      color: #555;
+      margin-bottom: 2px;
+    }
+    #header-text .dept {
+      font-size: 0.92rem;
+      color: #555;
+      margin-bottom: 12px;
+    }
+    #header-text .interests {
+      font-size: 0.92rem;
+      margin-bottom: 8px;
+    }
+    #header-text .contact {
+      font-size: 0.88rem;
+      color: #555;
+    }
+
+    /* ── Nav ── */
+    nav {
+      border-top: 1px solid #ddd;
+      border-bottom: 1px solid #ddd;
+      padding: 10px 0;
+      margin-bottom: 40px;
+      display: flex;
+      gap: 24px;
+      font-size: 0.88rem;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+    nav a {
+      color: #222;
+      text-decoration: none;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    nav a:hover { text-decoration: underline; }
+
+    /* ── Sections ── */
+    section { margin-bottom: 48px; }
+    h2 {
+      font-size: 1rem;
+      font-weight: normal;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 6px;
+      margin-bottom: 20px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      color: #333;
+    }
+
+    /* ── Paper entries ── */
+    .paper {
+      margin-bottom: 22px;
+    }
+    .paper-title {
+      font-size: 0.97rem;
+      margin-bottom: 3px;
+    }
+    .paper-title a {
+      color: #222;
+      text-decoration: none;
+      border-bottom: 1px solid #bbb;
+    }
+    .paper-title a:hover { border-bottom-color: #222; }
+
+    .paper-meta {
+      font-size: 0.86rem;
+      color: #555;
+      margin-bottom: 4px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+    .paper-links {
+      font-size: 0.84rem;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      margin-top: 4px;
+    }
+    .paper-links a {
+      color: #555;
+      text-decoration: none;
+      border-bottom: 1px solid #ccc;
+    }
+    .paper-links a:hover { color: #222; border-bottom-color: #222; }
+
+    /* Abstract toggle */
+    .abstract-toggle {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 0.84rem;
+      color: #555;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      padding: 0;
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+    }
+    .abstract-toggle:hover { color: #222; }
+    .abstract-toggle .chevron {
+      display: inline-block;
+      transition: transform 0.2s ease;
+      font-style: normal;
+    }
+    .abstract-toggle.open .chevron { transform: rotate(90deg); }
+
+    .abstract-body {
+      display: none;
+      margin-top: 8px;
+      font-size: 0.88rem;
+      color: #444;
+      line-height: 1.6;
+      border-left: 2px solid #e0e0e0;
+      padding-left: 14px;
+    }
+    .abstract-body.visible { display: block; }
+
+    /* Status badges */
+    .badge {
+      display: inline-block;
+      font-size: 0.78rem;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      color: #666;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      padding: 1px 6px;
+      white-space: nowrap;
+    }
+
+    /* Publication entries (no abstract) */
+    .pub {
+      margin-bottom: 18px;
+      font-size: 0.94rem;
+    }
+    .pub-journal {
+      font-size: 0.84rem;
+      color: #555;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+
+    /* Teaching / Other */
+    .teaching-list, .other-list {
+      list-style: none;
+      font-size: 0.92rem;
+    }
+    .teaching-list li, .other-list li {
+      padding: 4px 0;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    .teaching-list li:last-child, .other-list li:last-child { border-bottom: none; }
+    .teaching-list a, .other-list a {
+      color: #222;
+      text-decoration: none;
+      border-bottom: 1px solid #ccc;
+    }
+    .teaching-list a:hover, .other-list a:hover { border-bottom-color: #222; }
+    .teaching-year {
+      color: #888;
+      font-size: 0.84rem;
+      margin-right: 6px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+
+    footer {
+      margin-top: 60px;
+      font-size: 0.8rem;
+      color: #aaa;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      text-align: center;
+    }
+
+    @media (max-width: 520px) {
+      #header { flex-direction: column; }
+      #header img { width: 120px; height: 120px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════ HEADER ═══════════════════ -->
+<div id="header">
+  <img src="photo.jpg" alt="Heitor Pellegrina" />
+  <div id="header-text">
+    <h1>Heitor Pellegrina</h1>
+    <p class="title">Patrick J. O'Malley III and Christine A. O'Malley Associate Professor</p>
+    <p class="dept">Department of Economics, University of Notre Dame</p>
+    <p class="interests">Research interests: Trade, Development, and the Environment</p>
+    <p class="contact">
+      Office 3042, Jenkins Nanovic Hall &nbsp;·&nbsp;
+      hpelleg3 [at] nd.edu &nbsp;·&nbsp;
+      <a href="files/Pellegrina_CV.pdf" style="color:#222; border-bottom:1px solid #bbb; text-decoration:none;">CV</a>
+    </p>
+  </div>
+</div>
+
+<!-- ═══════════════════ NAV ═══════════════════ -->
+<nav>
+  <a href="#working-papers">Working Papers</a>
+  <a href="#publications">Publications</a>
+  <a href="#other">Other Writing</a>
+  <a href="#wip">In Progress</a>
+  <a href="#teaching">Teaching</a>
+</nav>
+
+<!-- ═══════════════════ WORKING PAPERS ═══════════════════ -->
+<section id="working-papers">
+  <h2>Working Papers</h2>
+
+  <div class="paper">
+    <div class="paper-title">
+      <a href="files/scaling_insurance.pdf">Scaling Up Agricultural Insurance</a>
+    </div>
+    <div class="paper-meta">
+      with <a href="https://majerovitz.com/" style="color:#555;">Jeremy Majerovitz</a>
+      &nbsp;·&nbsp; May 2026
+    </div>
+    <div class="paper-links">
+      <span class="badge">Accepted, JME (CRNYU Series) Conference</span>
+      <button class="abstract-toggle" onclick="toggleAbstract(this)">
+        <span class="chevron">▸</span> Abstract
+      </button>
+    </div>
+    <div class="abstract-body">
+      Should governments subsidize rainfall insurance for farmers in developing countries? We study this question using a general equilibrium model calibrated to Ghana, bringing experimental moments from previous studies to discipline the structural parameters. The optimal subsidy trades off a fiscal externality, a pecuniary externality from crop-price changes, and a fiscal incidence term — and is close to zero.
+    </div>
+  </div>
+
+  <div class="paper">
+    <div class="paper-title">
+      <a href="files/embrapa_paper.pdf">Public R&amp;D Meets Economic Development: Embrapa and Brazil's Agricultural Revolution</a>
+    </div>
+    <div class="paper-meta">
+      with <a href="https://sites.google.com/site/ariaker" style="color:#555;">Ariel Akerman</a>,
+      <a href="https://economics.mit.edu/people/faculty/jacob-moscona" style="color:#555;">Jacob Moscona</a>,
+      and <a href="https://www.karthiksastry.com/" style="color:#555;">Karthik Sastry</a>
+      &nbsp;·&nbsp; Mar. 2026
+    </div>
+    <div class="paper-links">
+      <span class="badge">Submitted</span>
+      <a href="https://cepr.org/voxeu/columns/public-rd-and-brazils-agricultural-revolution">VoxEU</a>
+      <a href="https://www.nber.org/digest/202511/public-agricultural-rd-and-brazilian-economic-development">NBER Digest</a>
+      <button class="abstract-toggle" onclick="toggleAbstract(this)">
+        <span class="chevron">▸</span> Abstract
+      </button>
+    </div>
+    <div class="abstract-body">
+      Can public R&amp;D investments in developing countries drive productivity growth? We study this question in the context of Brazilian agriculture and the Empresa Brasileira de Pesquisa Agropecuária (Embrapa), a public research corporation established in 1973 to develop locally suitable science and technology. We study the effects of Embrapa on the direction of agricultural research and on agricultural productivity. Structural results indicate substantial agricultural productivity gains, implying large returns to R&amp;D, much of which is explained by Embrapa's dispersed network of centers.
+    </div>
+  </div>
+
+  <div class="paper">
+    <div class="paper-title">
+      <a href="files/ADGIP_dec_2025.pdf">Farm Size Distribution, Weather Shocks, and Agricultural Productivity</a>
+    </div>
+    <div class="paper-meta">
+      with <a href="https://globalmigration.ucdavis.edu/people/julian-arteaga" style="color:#555;">Julian Arteaga</a>,
+      <a href="https://investiga.banrep.gov.co/es/profile/63" style="color:#555;">Margarita Gáfaro</a>,
+      <a href="http://www.anamariaibanez.net/" style="color:#555;">Ana María Ibáñez</a>,
+      and <a href="https://sites.google.com/site/nicoderoux/" style="color:#555;">Nicolás de Roux</a>
+      &nbsp;·&nbsp; Dec. 2025
+    </div>
+    <div class="paper-links">
+      <a href="https://voxdev.org/topic/agriculture/how-will-climate-change-shape-land-markets-and-farm-sizes-developing-world">VoxDev</a>
+      <button class="abstract-toggle" onclick="toggleAbstract(this)">
+        <span class="chevron">▸</span> Abstract
+      </button>
+    </div>
+    <div class="abstract-body">
+      We document new empirical facts about farm size dynamics and the impact of weather shocks across developing countries. Using an administrative dataset for Colombia, we also show that weather shocks increase the frequency of land sales and reduce farm sizes within municipalities. We calibrate a dynamic, heterogeneous household model in which uninsured farmers make landholding and occupational choices. We find that temporary weather shocks have long and persistent effects on the economy, taking more than a decade to fade out.
+    </div>
+  </div>
+
+  <div class="paper">
+    <div class="paper-title">
+      <a href="files/FKPS_Dec2025.pdf">Deforestation: A Global and Dynamic Perspective</a>
+    </div>
+    <div class="paper-meta">
+      with <a href="http://web.ics.purdue.edu/~ffarrokh/" style="color:#555;">Farid Farrokhi</a>,
+      <a href="https://sites.google.com/view/elliotkang" style="color:#555;">Elliot Kang</a>,
+      and <a href="http://www-personal.umich.edu/~ssotelo/" style="color:#555;">Sebastian Sotelo</a>
+      &nbsp;·&nbsp; Dec. 2025
+    </div>
+    <div class="paper-links">
+      <span class="badge">R&amp;R, American Economic Review</span>
+      <a href="https://tradetalkspodcast.com/podcast/192-will-more-farm-trade-cause-more-deforestation/">TradeTalks</a>
+      <button class="abstract-toggle" onclick="toggleAbstract(this)">
+        <span class="chevron">▸</span> Abstract
+      </button>
+    </div>
+    <div class="abstract-body">
+      We study the impacts of trade costs on deforestation through a dynamic, global perspective. We build a dynamic GE model of trade and land use, in which structural change and comparative advantage determine the extent, location, and timing of deforestation. Results indicate that the global forest area would expand in response to multilateral trade liberalization in agriculture, but that it would shrink when the liberalization is experienced by individual regions.
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ PUBLICATIONS ═══════════════════ -->
+<section id="publications">
+  <h2>Publications &amp; Accepted</h2>
+
+  <div class="paper">
+    <div class="paper-title">
+      <a href="https://doi.org/10.1093/ej/ueag032">Diet, Economic Development, and Climate Change</a>
+    </div>
+    <div class="paper-meta">
+      with <a href="https://lucasccdias.github.io/" style="color:#555;">Lucas Corrêa-Dias</a>
+      and <a href="https://www.jordanjnorris.com/" style="color:#555;">Jordan Norris</a>
+    </div>
+    <div class="paper-links">
+      <span class="pub-journal">Economic Journal, Mar. 2026</span>
+      <button class="abstract-toggle" onclick="toggleAbstract(this)">
+        <span class="chevron">▸</span> Abstract
+      </button>
+    </div>
+    <div class="abstract-body">
+      [Add abstract here]
+    </div>
+  </div>
+
+  <div class="paper">
+    <div class="paper-title">
+      <a href="https://www.journals.uchicago.edu/doi/10.1086/738147">Migration, Specialization, and Trade: Evidence from Brazil's March to the West</a>
+    </div>
+    <div class="paper-meta">
+      with <a href="http://www-personal.umich.edu/~ssotelo/" style="color:#555;">Sebastian Sotelo</a>
+    </div>
+    <div class="paper-links">
+      <span class="pub-journal">Journal of Political Economy, Nov. 2025</span>
+      <a href="https://websites.umich.edu/~ssotelo/research/PS_MigCA_OnlineApp.pdf">Appendix</a>
+      <a href="https://voxdev.org/topic/migration-urbanisation/migration-knowledge-and-comparative-advantage-how-brazils-march-west">VoxDev</a>
+      <button class="abstract-toggle" onclick="toggleAbstract(this)">
+        <span class="chevron">▸</span> Abstract
+      </button>
+    </div>
+    <div class="abstract-body">
+      [Add abstract here]
+    </div>
+  </div>
+
+  <div class="paper">
+    <div class="paper-title">
+      <a href="https://doi.org/10.1016/j.jinteco.2024.103922">Trade and Technology Adoption in Distorted Economies</a>
+    </div>
+    <div class="paper-meta">
+      with <a href="http://web.ics.purdue.edu/~ffarrokh/" style="color:#555;">Farid Farrokhi</a>
+      and <a href="https://alashkar.pages.iu.edu/" style="color:#555;">Ahmad Lashkaripour</a>
+    </div>
+    <div class="paper-links">
+      <span class="pub-journal">Journal of International Economics, Jul. 2024</span>
+      <a href="https://data.mendeley.com/datasets/7ttxcjxsc8/1">Replication</a>
+      <a href="files/FLP_RES.pdf">Slides</a>
+      <button class="abstract-toggle" onclick="toggleAbstract(this)">
+        <span class="chevron">▸</span> Abstract
+      </button>
+    </div>
+    <div class="abstract-body">
+      [Add abstract here]
+    </div>
+  </div>
+
+  <div class="paper">
+    <div class="paper-title">
+      <a href="https://www.journals.uchicago.edu/doi/10.1086/724319">Trade, Technology, and Agricultural Productivity</a>
+    </div>
+    <div class="paper-meta">
+      with <a href="http://web.ics.purdue.edu/~ffarrokh/" style="color:#555;">Farid Farrokhi</a>
+    </div>
+    <div class="paper-links">
+      <span class="pub-journal">Journal of Political Economy, Sep. 2023</span>
+      <a href="https://www.journals.uchicago.edu/doi/suppl/10.1086/724319/suppl_file/20210575Appendix.pdf">Appendix</a>
+      <a href="files/FP_slides_oct.pdf">Slides</a>
+      <a href="https://voxdev.org/topic/trade/how-did-global-trade-drive-shift-modern-farming">VoxDev</a>
+      <button class="abstract-toggle" onclick="toggleAbstract(this)">
+        <span class="chevron">▸</span> Abstract
+      </button>
+    </div>
+    <div class="abstract-body">
+      [Add abstract here]
+    </div>
+  </div>
+
+  <div class="paper">
+    <div class="paper-title">
+      <a href="https://doi.org/10.1016/j.jdeveco.2022.102997">Irrigation and the Spatial Pattern of Local Development in India</a>
+    </div>
+    <div class="paper-meta">
+      with <a href="http://www.davidsblakeslee.net/" style="color:#555;">David Blakeslee</a>,
+      <a href="https://aadityadar.com/" style="color:#555;">Aaditya Dar</a>,
+      <a href="https://www.ram.sites.tau.ac.il/" style="color:#555;">Ram Fishman</a>,
+      <a href="https://www.samreenmalik.net/" style="color:#555;">Samreen Malik</a>,
+      Karan Singh
+    </div>
+    <div class="paper-links">
+      <span class="pub-journal">Journal of Development Economics, Mar. 2023</span>
+      <a href="https://data.mendeley.com/datasets/f4hx274nbz/1">Replication</a>
+      <button class="abstract-toggle" onclick="toggleAbstract(this)">
+        <span class="chevron">▸</span> Abstract
+      </button>
+    </div>
+    <div class="abstract-body">
+      [Add abstract here]
+    </div>
+  </div>
+
+  <div class="paper">
+    <div class="paper-title">
+      <a href="https://www.sciencedirect.com/science/article/pii/S0022199622000307">Trade, Farmers' Heterogeneity, and Agricultural Productivity: Evidence from Colombia</a>
+    </div>
+    <div class="paper-meta">
+      with <a href="http://investiga.banrep.gov.co/en/profile/63" style="color:#555;">Margarita Gáfaro</a>
+    </div>
+    <div class="paper-links">
+      <span class="pub-journal">Journal of International Economics, Jul. 2022</span>
+      <a href="https://data.mendeley.com/datasets/ftb3kv6jv4/1">Replication</a>
+      <button class="abstract-toggle" onclick="toggleAbstract(this)">
+        <span class="chevron">▸</span> Abstract
+      </button>
+    </div>
+    <div class="abstract-body">
+      [Add abstract here]
+    </div>
+  </div>
+
+  <div class="paper">
+    <div class="paper-title">
+      <a href="https://www.sciencedirect.com/science/article/pii/S0304387822000402">From Bilateral to Centralized Markets: A Search Model for Commodity Exchanges in Africa</a>
+    </div>
+    <div class="paper-meta">
+      with <a href="https://www.yawnyarko.com/" style="color:#555;">Yaw Nyarko</a>
+    </div>
+    <div class="paper-links">
+      <span class="pub-journal">Journal of Development Economics, Jul. 2022</span>
+      <button class="abstract-toggle" onclick="toggleAbstract(this)">
+        <span class="chevron">▸</span> Abstract
+      </button>
+    </div>
+    <div class="abstract-body">
+      [Add abstract here]
+    </div>
+  </div>
+
+  <div class="paper">
+    <div class="paper-title">
+      <a href="https://www.sciencedirect.com/science/article/pii/S030438782100167X">Trade, Productivity, and the Spatial Organization of Agriculture: Evidence from Brazil</a>
+    </div>
+    <div class="paper-meta">Heitor Pellegrina</div>
+    <div class="paper-links">
+      <span class="pub-journal">Journal of Development Economics, May 2022</span>
+      <a href="https://www.openicpsr.org/openicpsr/project/161163/version/V1/view">Replication</a>
+      <button class="abstract-toggle" onclick="toggleAbstract(this)">
+        <span class="chevron">▸</span> Abstract
+      </button>
+    </div>
+    <div class="abstract-body">
+      [Add abstract here]
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ OTHER WRITING ═══════════════════ -->
+<section id="other">
+  <h2>Other Writing</h2>
+  <ul class="other-list">
+    <li>
+      <a href="https://voxdev.org/voxdevlit/deforestation">VoxDev Literature on Deforestation</a>
+      — editors: <a href="https://sites.google.com/site/fjmcosta/">Francisco Costa</a> and <a href="https://allanhsiao.com/">Allan Hsiao</a>
+      <span class="teaching-year">(Sep. 2025)</span>
+    </li>
+    <li>
+      <a href="https://voxdev.org/voxdevlit/foreign-direct-investment">VoxDev Literature on Foreign Direct Investments</a>
+      — editors: <a href="https://people.bu.edu/garettos/">Stefania Garetto</a>, <a href="https://sites.dartmouth.edu/npavcnik/">Nina Pavcnik</a>, and <a href="https://sites.google.com/site/nataliaramondo/">Natalia Ramondo</a>
+      <span class="teaching-year">(Feb. 2025)</span>
+    </li>
+    <li>
+      <a href="https://voxdev.org/voxdevlit/international-trade">VoxDev Literature on International Trade in Developing Economies</a>
+      — editors: <a href="https://www.mit.edu/~atkin/">David Atkin</a> and <a href="https://akhandelwal8.github.io/">Amit Khandelwal</a>
+      <span class="teaching-year">(Feb. 2025)</span>
+    </li>
+  </ul>
+</section>
+
+<!-- ═══════════════════ WORK IN PROGRESS ═══════════════════ -->
+<section id="wip">
+  <h2>Work in Progress</h2>
+  <ul class="other-list">
+    <li>
+      On Commodity Booms and Industrialization: Brazil before WWI
+      — with Brock Rowberry, <a href="https://alaskievic.github.io/">Andrei Laskievic</a>, and <a href="http://www-personal.umich.edu/~ssotelo/">Sebastian Sotelo</a>
+    </li>
+    <li>
+      Of Boom and Ghost Towns: Early City Formation in the California Gold Rush
+      — with <a href="https://sites.google.com/view/hoelzlein">Matthias Hoelzlein</a>
+    </li>
+  </ul>
+</section>
+
+<!-- ═══════════════════ TEACHING ═══════════════════ -->
+<section id="teaching">
+  <h2>Teaching</h2>
+  <ul class="teaching-list">
+    <li><span class="teaching-year">2025</span> Economic Growth (UG), University of Notre Dame</li>
+    <li><span class="teaching-year">2025</span> <a href="https://github.com/hpellegrina/quantitative_trade/">Quantitative International Trade (PhD)</a>, University of Notre Dame</li>
+    <li><span class="teaching-year">2025</span> Development Economics II (PhD), University of Notre Dame</li>
+    <li><span class="teaching-year">2023</span> Economic Growth (UG), University of Notre Dame</li>
+    <li><span class="teaching-year">2021–22</span> Economic Policy and Environmental Economics (UG), NYU Abu Dhabi</li>
+    <li><span class="teaching-year">2017–20</span> International Economics (UG), NYU Abu Dhabi</li>
+    <li><span class="teaching-year">2017–19</span> Statistics for the Social Sciences (UG), NYU Abu Dhabi</li>
+  </ul>
+</section>
+
+<!-- ═══════════════════ ADDITIONAL ═══════════════════ -->
+<section id="additional">
+  <h2>Additional Material</h2>
+  <ul class="other-list">
+    <li>
+      <a href="https://github.com/hpellegrina/hello-world-econ/blob/master/documentation/github-manual.pdf">A Brief Introduction to GitHub for Social Scientists using Stata and Dropbox</a>
+      — with Andres Fajardo
+      (<a href="https://github.com/hpellegrina/hello-world-econ">GitHub</a>)
+    </li>
+  </ul>
+</section>
+
+<footer>Heitor Pellegrina &nbsp;·&nbsp; Department of Economics, University of Notre Dame</footer>
+
+<script>
+  function toggleAbstract(btn) {
+    btn.classList.toggle('open');
+    const abstract = btn.closest('.paper-links').nextElementSibling;
+    abstract.classList.toggle('visible');
+  }
+</script>
+</body>
+</html>
